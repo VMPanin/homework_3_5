@@ -10,10 +10,11 @@ def convert_temps(path):
     average_temp_f = sum(list_temps) / len(list_temps)
 
     client = osa.Client('http://www.webservicex.net/ConvertTemperature.asmx?WSDL')
-    average_temp_C = client.service.ConvertTemp(Temperature=average_temp_f,
-                                                FromUnit='degreeFahrenheit',
-                                                ToUnit='degreeCelsius'
-                                                )
+    average_temp_C = client.service.ConvertTemp(
+        Temperature=average_temp_f,
+        FromUnit='degreeFahrenheit',
+        ToUnit='degreeCelsius'
+    )
     return round(average_temp_C, 1)
 
 
@@ -27,11 +28,12 @@ def convert_currencies(path):
     total_amount = 0
     for k, v in dict_currencies.items():
         client = osa.Client('http://fx.currencysystem.com/webservices/CurrencyServer4.asmx?WSDL')
-        amount = client.service.ConvertToNum(fromCurrency=k,
-                                             toCurrency='RUB',
-                                             amount=v,
-                                             rounding=False
-                                             )
+        amount = client.service.ConvertToNum(
+            fromCurrency=k,
+            toCurrency='RUB',
+            amount=v,
+            rounding=False
+        )
         total_amount += amount
     return math.ceil(total_amount)
 
@@ -44,10 +46,11 @@ def convert_travel(path):
             list_travel.append(float(line[line.find(': ')+2:len(line)-3]))
 
     client = osa.Client('http://www.webservicex.net/length.asmx?WSDL')
-    amount = client.service.ChangeLengthUnit(LengthValue=sum(list_travel),
-                                             fromLengthUnit='Miles',
-                                             toLengthUnit='Kilometers'
-                                             )
+    amount = client.service.ChangeLengthUnit(
+        LengthValue=sum(list_travel),
+        fromLengthUnit='Miles',
+        toLengthUnit='Kilometers'
+    )
     return round(amount, 2)
 
 
